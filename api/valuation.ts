@@ -1,72 +1,49 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { valuationRequestSchema } from './_lib/schema.js';
-import {
-  checkExistingContact,
-  createContact,
-  isFollowUpBossConfigured,
-} from './_lib/followUpBoss.js';
+import { FUB_SITE_SOURCE } from './_lib/followUpBoss.js';
+import type { FubEventPayload } from './_lib/followUpBoss.js';
+import { handleLeadSubmission, methodNotAllowed } from './_lib/handlerUtils.js';
+
+const FORM_NAME = 'Home Valuation Form';
+
+function buildValuationEvent(req: VercelRequest, body: unknown): FubEventPayload {
+  const validated = valuationRequestSchema.parse(body);
+
+  const propertyLine = `Property: ${validated.address}, ${validated.city}, ${validated.state} ${validated.zipCode}`;
+  const extra = [
+    validated.propertyType ? `Property type: ${validated.propertyType}` : null,
+    validated.estimatedValue != null ? `Estimated value: ${validated.estimatedValue}` : null,
+    validated.timeframe ? `Timeframe: ${validated.timeframe}` : null,
+  ]
+    .filter(Boolean)
+    .join(' | ');
+
+  const message = extra ? `${propertyLine}\n\n${extra}` : propertyLine;
+
+  const referer = req.headers.referer;
+  const sourceUrl =
+    validated.sourceUrl ??
+    (typeof referer === 'string' ? referer : undefined);
+
+  return {
+    type: 'Seller Inquiry',
+    message,
+    description: `${FORM_NAME} — ${FUB_SITE_SOURCE}`,
+    sourceUrl,
+    person: {
+      firstName: validated.firstName,
+      lastName: validated.lastName,
+      email: validated.email,
+      phone: validated.phone,
+      formName: FORM_NAME,
+    },
+  };
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return res.status(405).json({ success: false, message: 'Method not allowed' });
+    return methodNotAllowed(res);
   }
 
-  try {
-    const validatedData = valuationRequestSchema.parse(req.body);
-
-    let followUpBossError: string | null = null;
-    let crmStatus: 'success' | 'skipped' | 'error' = 'success';
-
-    if (!isFollowUpBossConfigured()) {
-      console.warn(
-        '[api/valuation] FOLLOW_UP_BOSS_API_KEY is not set; lead accepted but not sent to CRM. Submitted fields:',
-        JSON.stringify(validatedData),
-      );
-      crmStatus = 'skipped';
-    } else {
-      try {
-        const existingContact = await checkExistingContact(validatedData.email);
-
-        if (!existingContact || existingContact.people.length === 0) {
-          const contactData = {
-            firstName: validatedData.firstName,
-            lastName: validatedData.lastName,
-            email: validatedData.email,
-            phone: validatedData.phone,
-            interest: 'Home Valuation',
-            message: `Property Address: ${validatedData.address}, ${validatedData.city}, ${validatedData.state} ${validatedData.zipCode}${validatedData.timeframe ? ` | Timeframe: ${validatedData.timeframe}` : ''}`,
-            consentGiven: true,
-          };
-
-          await createContact(contactData);
-        }
-      } catch (crmError) {
-        console.error('Error with Follow Up Boss CRM:', crmError);
-        followUpBossError =
-          crmError instanceof Error ? crmError.message : 'Unknown CRM error';
-        crmStatus = 'error';
-      }
-    }
-
-    const id = Date.now();
-
-    return res.status(200).json({
-      success: true,
-      message: 'Valuation request received successfully',
-      id,
-      crmStatus,
-      crmMessage:
-        crmStatus === 'skipped'
-          ? 'Lead recorded; CRM integration pending configuration'
-          : followUpBossError || 'Valuation request sent to CRM',
-    });
-  } catch (error) {
-    console.error('Error processing valuation request:', error);
-    return res.status(400).json({
-      success: false,
-      message: 'Invalid valuation form data',
-      error: error instanceof Error ? error.message : 'Unknown error',
-    });
-  }
+  return handleLeadSubmission(req, res, (body) => buildValuationEvent(req, body));
 }

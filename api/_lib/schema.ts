@@ -1,5 +1,10 @@
 import { z } from 'zod';
 
+const honeypotFields = {
+  company: z.string().optional(),
+  website: z.string().optional(),
+};
+
 export const contactSchema = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
@@ -8,6 +13,8 @@ export const contactSchema = z.object({
   interest: z.string().optional().nullable(),
   message: z.string().optional().nullable(),
   consent: z.boolean(),
+  sourceUrl: z.string().url().optional(),
+  ...honeypotFields,
 });
 
 export type ContactFormData = z.infer<typeof contactSchema>;
@@ -24,6 +31,8 @@ export const valuationRequestSchema = z.object({
   propertyType: z.string().optional().nullable(),
   estimatedValue: z.number().optional().nullable(),
   timeframe: z.string().optional().nullable(),
+  sourceUrl: z.string().url().optional(),
+  ...honeypotFields,
 });
 
 export type ValuationFormData = z.infer<typeof valuationRequestSchema>;

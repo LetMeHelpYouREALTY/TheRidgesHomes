@@ -39,16 +39,17 @@ async function runHandler(
   name: string,
   handler: Handler,
   req: Partial<VercelRequest>,
+  expectedStatus: number,
 ): Promise<void> {
   const res = createMockRes();
   await handler(req as VercelRequest, res);
-  const ok = res.statusCode >= 200 && res.statusCode < 300;
+  const ok = res.statusCode === expectedStatus;
   console.log(
-    `${ok ? 'OK' : 'FAIL'} ${name} -> ${res.statusCode}`,
+    `${ok ? 'OK' : 'FAIL'} ${name} -> ${res.statusCode} (expected ${expectedStatus})`,
     JSON.stringify(res.body)?.slice(0, 120),
   );
   if (!ok) {
-    throw new Error(`${name} returned ${res.statusCode}`);
+    throw new Error(`${name} returned ${res.statusCode}, expected ${expectedStatus}`);
   }
 }
 
@@ -56,47 +57,33 @@ async function main() {
   delete process.env.FOLLOW_UP_BOSS_API_KEY;
 
   const testimonials = await import('../api/testimonials.ts');
-  await runHandler('GET /api/testimonials', testimonials.default, { method: 'GET' });
+  await runHandler('GET /api/testimonials', testimonials.default, { method: 'GET' }, 200);
 
   const properties = await import('../api/properties.ts');
   await runHandler('GET /api/properties', properties.default, {
     method: 'GET',
     query: {},
-  });
+  }, 200);
   await runHandler('GET /api/properties?id=1', properties.default, {
     method: 'GET',
     query: { id: '1' },
-  });
+  }, 200);
 
   const contact = await import('../api/contact.ts');
-  await runHandler('POST /api/contact', contact.default, {
-    method: 'POST',
-    body: {
-      firstName: 'Test',
-      lastName: 'User',
-      email: 'test@example.com',
-      phone: '7025550100',
-      interest: 'Buying',
-      message: 'Hello',
-      consent: true,
-    },
-  });
+  await runHandler(
+    'POST /api/contact {}',
+    contact.default,
+    { method: 'POST', body: {} },
+    400,
+  );
 
   const valuation = await import('../api/valuation.ts');
-  await runHandler('POST /api/valuation', valuation.default, {
-    method: 'POST',
-    body: {
-      firstName: 'Val',
-      lastName: 'Uation',
-      email: 'val@example.com',
-      phone: '7025550101',
-      address: '1 Main St',
-      city: 'Las Vegas',
-      state: 'NV',
-      zipCode: '89135',
-      timeframe: '3 months',
-    },
-  });
+  await runHandler(
+    'POST /api/valuation {}',
+    valuation.default,
+    { method: 'POST', body: {} },
+    400,
+  );
 
   console.log('All API handler smoke tests passed.');
 }

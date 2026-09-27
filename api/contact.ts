@@ -1,73 +1,50 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { contactSchema } from './_lib/schema.js';
-import {
-  checkExistingContact,
-  createContact,
-  isFollowUpBossConfigured,
-} from './_lib/followUpBoss.js';
+import { FUB_SITE_SOURCE } from './_lib/followUpBoss.js';
+import type { FubEventPayload } from './_lib/followUpBoss.js';
+import { handleLeadSubmission, methodNotAllowed } from './_lib/handlerUtils.js';
+
+const FORM_NAME = 'Contact Form';
+
+function buildContactEvent(req: VercelRequest, body: unknown): FubEventPayload {
+  const validated = contactSchema.parse(body);
+
+  const fieldSummary = [
+    validated.interest ? `Interest: ${validated.interest}` : null,
+    `Consent: ${validated.consent ? 'yes' : 'no'}`,
+  ]
+    .filter(Boolean)
+    .join(' | ');
+
+  const visitorMessage = validated.message?.trim() ?? '';
+  const message = visitorMessage
+    ? `${visitorMessage}\n\n${fieldSummary}`
+    : fieldSummary || 'Website contact inquiry';
+
+  const referer = req.headers.referer;
+  const sourceUrl =
+    validated.sourceUrl ??
+    (typeof referer === 'string' ? referer : undefined);
+
+  return {
+    type: 'General Inquiry',
+    message,
+    description: `${FORM_NAME} — ${FUB_SITE_SOURCE}`,
+    sourceUrl,
+    person: {
+      firstName: validated.firstName,
+      lastName: validated.lastName,
+      email: validated.email,
+      phone: validated.phone,
+      formName: FORM_NAME,
+    },
+  };
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
-    return res.status(405).json({ success: false, message: 'Method not allowed' });
+    return methodNotAllowed(res);
   }
 
-  try {
-    const validatedData = contactSchema.parse(req.body);
-
-    let followUpBossError: string | null = null;
-    let crmStatus: 'success' | 'skipped' | 'error' = 'success';
-
-    if (!isFollowUpBossConfigured()) {
-      console.warn(
-        '[api/contact] FOLLOW_UP_BOSS_API_KEY is not set; lead accepted but not sent to CRM. Submitted fields:',
-        JSON.stringify(validatedData),
-      );
-      crmStatus = 'skipped';
-    } else {
-      try {
-        const existingContact = await checkExistingContact(validatedData.email);
-
-        if (!existingContact || existingContact.people.length === 0) {
-          const contactData = {
-            firstName: validatedData.firstName,
-            lastName: validatedData.lastName,
-            email: validatedData.email,
-            phone: validatedData.phone,
-            interest: validatedData.interest || null,
-            message: validatedData.message || null,
-            consent: validatedData.consent || false,
-            consentGiven: validatedData.consent || false,
-          };
-
-          await createContact(contactData);
-        }
-      } catch (crmError) {
-        console.error('Error with Follow Up Boss CRM:', crmError);
-        followUpBossError =
-          crmError instanceof Error ? crmError.message : 'Unknown CRM error';
-        crmStatus = 'error';
-      }
-    }
-
-    const id = Date.now();
-
-    return res.status(200).json({
-      success: true,
-      message: 'Contact request received successfully',
-      id,
-      crmStatus,
-      crmMessage:
-        crmStatus === 'skipped'
-          ? 'Lead recorded; CRM integration pending configuration'
-          : followUpBossError || 'Contact data sent to CRM',
-    });
-  } catch (error) {
-    console.error('Error processing contact request:', error);
-    return res.status(400).json({
-      success: false,
-      message: 'Invalid form data',
-      error: error instanceof Error ? error.message : 'Unknown error',
-    });
-  }
+  return handleLeadSubmission(req, res, (body) => buildContactEvent(req, body));
 }

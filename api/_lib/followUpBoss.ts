@@ -1,79 +1,80 @@
-import axios from 'axios';
+export const FUB_SITE_SOURCE = 'theridgessummerlinhomes.com';
 
-interface GenericContactData {
+const FOLLOW_UP_BOSS_EVENTS_URL = 'https://api.followupboss.com/v1/events';
+
+export type FubInquiryType =
+  | 'General Inquiry'
+  | 'Seller Inquiry'
+  | 'Property Inquiry'
+  | 'Registration';
+
+export type FubEventPerson = {
   firstName: string;
   lastName: string;
-  email: string;
-  phone: string;
-  interest?: string | null;
-  message?: string | null;
-  consent?: boolean;
-  consentGiven?: boolean;
-}
+  email?: string;
+  phone?: string;
+  formName: string;
+};
 
-const FOLLOW_UP_BOSS_API_URL = 'https://api.followupboss.com/v1';
-
-interface FollowUpBossPersonData {
-  firstName: string;
-  lastName: string;
-  emails: { value: string; type: string }[];
-  phones: { value: string; type: string }[];
-  source: string;
-  tags?: string[];
-  notes?: string;
-}
+export type FubEventPayload = {
+  type: FubInquiryType;
+  message: string;
+  description: string;
+  sourceUrl?: string;
+  person: FubEventPerson;
+};
 
 export function isFollowUpBossConfigured(): boolean {
   return Boolean(process.env.FOLLOW_UP_BOSS_API_KEY?.trim());
 }
 
-function getApiKey(): string {
+function getAuthorizationHeader(): string {
   const apiKey = process.env.FOLLOW_UP_BOSS_API_KEY?.trim();
   if (!apiKey) {
-    throw new Error('Follow Up Boss API Key is not set');
+    throw new Error('FOLLOW_UP_BOSS_API_KEY is not configured');
   }
-  return apiKey;
+  return `Basic ${Buffer.from(`${apiKey}:`, 'utf8').toString('base64')}`;
 }
 
-export async function createContact(formData: GenericContactData) {
-  const API_KEY = getApiKey();
+export async function postFollowUpBossEvent(payload: FubEventPayload): Promise<void> {
+  const { person, type, message, description, sourceUrl } = payload;
 
-  const personData: FollowUpBossPersonData = {
-    firstName: formData.firstName,
-    lastName: formData.lastName,
-    emails: [{ value: formData.email, type: 'primary' }],
-    phones: [{ value: formData.phone, type: 'mobile' }],
-    source: 'Website Contact Form',
-    tags: formData.interest ? [formData.interest] : ['Website Inquiry'],
-    notes:
-      formData.message ||
-      (formData.interest ? `Interest: ${formData.interest}` : 'Website inquiry'),
+  const body = {
+    source: FUB_SITE_SOURCE,
+    system: FUB_SITE_SOURCE,
+    type,
+    message,
+    description,
+    sourceUrl,
+    person: {
+      firstName: person.firstName,
+      lastName: person.lastName,
+      emails: person.email ? [{ value: person.email }] : [],
+      phones: person.phone ? [{ value: person.phone }] : [],
+      tags: [FUB_SITE_SOURCE, person.formName],
+    },
   };
 
-  const auth = {
-    username: API_KEY,
-    password: '',
-  };
-
-  const response = await axios.post(`${FOLLOW_UP_BOSS_API_URL}/people`, personData, {
-    auth,
+  const response = await fetch(FOLLOW_UP_BOSS_EVENTS_URL, {
+    method: 'POST',
+    headers: {
+      Authorization: getAuthorizationHeader(),
+      'Content-Type': 'application/json',
+      'X-System': FUB_SITE_SOURCE,
+    },
+    body: JSON.stringify(body),
   });
 
-  return response.data;
+  if (!response.ok) {
+    throw new Error(`Follow Up Boss API responded with status ${response.status}`);
+  }
 }
 
-export async function checkExistingContact(email: string) {
-  const API_KEY = getApiKey();
-
-  const auth = {
-    username: API_KEY,
-    password: '',
-  };
-
-  const response = await axios.get(
-    `${FOLLOW_UP_BOSS_API_URL}/people/search?email=${encodeURIComponent(email)}`,
-    { auth },
-  );
-
-  return response.data;
+export function isHoneypotTripped(body: Record<string, unknown> | undefined): boolean {
+  if (!body || typeof body !== 'object') {
+    return false;
+  }
+  const company = typeof body.company === 'string' ? body.company.trim() : '';
+  const website = typeof body.website === 'string' ? body.website.trim() : '';
+  return company.length > 0 || website.length > 0;
 }
