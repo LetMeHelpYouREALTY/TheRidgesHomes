@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import testimonials from '../data/testimonials.json';
+import testimonials from '../data/testimonials.json' with { type: 'json' };
 
 export default function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {

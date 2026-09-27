@@ -4,9 +4,17 @@
   "buildCommand": "npm run build:client",
   "outputDirectory": "dist/public",
   "installCommand": "npm install",
+  "functions": {
+    "api/properties.ts": {
+      "includeFiles": "data/properties.json"
+    },
+    "api/testimonials.ts": {
+      "includeFiles": "data/testimonials.json"
+    }
+  },
   "rewrites": [
     {
-      "source": "/((?!api/).*)",
+      "source": "/((?!api/|sitemap\\.xml|robots\\.txt|assets/|.*\\..*).*)",
       "destination": "/index.html"
     }
   ]

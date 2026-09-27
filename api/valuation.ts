@@ -1,6 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { valuationRequestSchema } from '../shared/schema';
-import { checkExistingContact, createContact } from '../lib/followUpBoss';
+import { valuationRequestSchema } from './_lib/schema.js';
+import {
+  checkExistingContact,
+  createContact,
+  isFollowUpBossConfigured,
+} from './_lib/followUpBoss.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -12,27 +16,37 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const validatedData = valuationRequestSchema.parse(req.body);
 
     let followUpBossError: string | null = null;
+    let crmStatus: 'success' | 'skipped' | 'error' = 'success';
 
-    try {
-      const existingContact = await checkExistingContact(validatedData.email);
+    if (!isFollowUpBossConfigured()) {
+      console.warn(
+        '[api/valuation] FOLLOW_UP_BOSS_API_KEY is not set; lead accepted but not sent to CRM. Submitted fields:',
+        JSON.stringify(validatedData),
+      );
+      crmStatus = 'skipped';
+    } else {
+      try {
+        const existingContact = await checkExistingContact(validatedData.email);
 
-      if (!existingContact || existingContact.people.length === 0) {
-        const contactData = {
-          firstName: validatedData.firstName,
-          lastName: validatedData.lastName,
-          email: validatedData.email,
-          phone: validatedData.phone,
-          interest: 'Home Valuation',
-          message: `Property Address: ${validatedData.address}, ${validatedData.city}, ${validatedData.state} ${validatedData.zipCode}${validatedData.timeframe ? ` | Timeframe: ${validatedData.timeframe}` : ''}`,
-          consentGiven: true,
-        };
+        if (!existingContact || existingContact.people.length === 0) {
+          const contactData = {
+            firstName: validatedData.firstName,
+            lastName: validatedData.lastName,
+            email: validatedData.email,
+            phone: validatedData.phone,
+            interest: 'Home Valuation',
+            message: `Property Address: ${validatedData.address}, ${validatedData.city}, ${validatedData.state} ${validatedData.zipCode}${validatedData.timeframe ? ` | Timeframe: ${validatedData.timeframe}` : ''}`,
+            consentGiven: true,
+          };
 
-        await createContact(contactData);
+          await createContact(contactData);
+        }
+      } catch (crmError) {
+        console.error('Error with Follow Up Boss CRM:', crmError);
+        followUpBossError =
+          crmError instanceof Error ? crmError.message : 'Unknown CRM error';
+        crmStatus = 'error';
       }
-    } catch (crmError) {
-      console.error('Error with Follow Up Boss CRM:', crmError);
-      followUpBossError =
-        crmError instanceof Error ? crmError.message : 'Unknown CRM error';
     }
 
     const id = Date.now();
@@ -41,8 +55,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       success: true,
       message: 'Valuation request received successfully',
       id,
-      crmStatus: followUpBossError ? 'error' : 'success',
-      crmMessage: followUpBossError || 'Valuation request sent to CRM',
+      crmStatus,
+      crmMessage:
+        crmStatus === 'skipped'
+          ? 'Lead recorded; CRM integration pending configuration'
+          : followUpBossError || 'Valuation request sent to CRM',
     });
   } catch (error) {
     console.error('Error processing valuation request:', error);
