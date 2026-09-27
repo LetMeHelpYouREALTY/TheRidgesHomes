@@ -7,6 +7,7 @@ import ValuationSection from '@/components/home/ValuationSection';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import PropertyListingsSection from '@/components/home/PropertyListingsSection';
 import ContactSection from '@/components/home/ContactSection';
+import AmenityMapSection from '@/components/amenities/AmenityMapSection';
 import { useEffect } from 'react';
 
 const Home = () => {
@@ -28,6 +29,7 @@ const Home = () => {
       <FeaturedListings />
       <AboutSection />
       <CommunitySection />
+      <AmenityMapSection compact />
       <ValuationSection />
       <TestimonialsSection />
       <PropertyListingsSection />
