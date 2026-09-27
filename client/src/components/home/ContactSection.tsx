@@ -21,8 +21,11 @@ const formSchema = z.object({
   message: z.string().optional(),
   consent: z.boolean().refine(val => val === true, {
     message: 'You must consent to receive communications'
-  })
+  }),
+  company: z.string().optional(),
 });
+
+const submitErrorMessage = `Sorry, something went wrong sending your message. Please call or text Dr. Jan Duffy at ${SITE_INFO.phone}.`;
 
 const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -37,7 +40,8 @@ const ContactSection = () => {
       phone: '',
       interest: 'buying',
       message: '',
-      consent: false
+      consent: false,
+      company: '',
     }
   });
 
@@ -46,43 +50,37 @@ const ContactSection = () => {
     
     try {
       // Map consent field to match server-side expectation
-      const mappedData = {
-        ...data,
-        // If server expects 'consentGiven' but form uses 'consent'
-        consentGiven: data.consent
-      };
-      
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(mappedData)
+        body: JSON.stringify({
+          ...data,
+          sourceUrl: window.location.href,
+        })
       });
       
-      if (response.ok) {
-        const result = await response.json();
-        
+      const result = await response.json().catch(() => null);
+
+      if (response.ok && result?.success) {
         toast({
           title: "Message Sent Successfully",
           description: "Thank you for contacting Dr. Jan Duffy. She will respond to your inquiry shortly.",
         });
         
-        // Log CRM status for debugging
-        console.log('CRM Integration Status:', result.crmStatus);
-        
         form.reset();
       } else {
         toast({
           title: "Error Sending Message",
-          description: "There was a problem sending your message. Please try again later.",
+          description: submitErrorMessage,
           variant: "destructive"
         });
       }
     } catch (error) {
       toast({
         title: "Error Sending Message",
-        description: "There was a problem sending your message. Please try again later.",
+        description: submitErrorMessage,
         variant: "destructive"
       });
     } finally {
@@ -184,6 +182,15 @@ const ContactSection = () => {
               
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <input
+                    type="text"
+                    name="company"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    className="absolute left-[-9999px] h-0 w-0 opacity-0 pointer-events-none"
+                    {...form.register('company')}
+                  />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField
                       control={form.control}

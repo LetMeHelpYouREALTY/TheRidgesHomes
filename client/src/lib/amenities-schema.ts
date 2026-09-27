@@ -60,6 +60,7 @@ export function buildAmenitiesPageSchemas() {
       item: {
         "@type": place.schemaType,
         name: place.name,
+        url: place.sourceUrl,
         address: place.address,
       },
     })),

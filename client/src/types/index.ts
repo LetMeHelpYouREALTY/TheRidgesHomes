@@ -37,4 +37,5 @@ export interface ContactFormData {
   interest: string;
   message: string;
   consent: boolean;
+  company?: string;
 }

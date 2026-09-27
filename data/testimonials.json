@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Michael & Sarah Thompson",
+    "location": "Bought in The Ridges",
+    "testimonial": "Dr. Duffy's expertise in The Ridges was invaluable. She knew every detail about the community and helped us find our dream home. Her negotiation skills saved us significantly on our purchase.",
+    "rating": 5,
+    "date": "March 2023"
+  },
+  {
+    "id": 2,
+    "name": "Jennifer Ramirez",
+    "location": "Sold in Falcon Ridge",
+    "testimonial": "The marketing strategy Dr. Duffy implemented for our home was exceptional. Professional photography, targeted advertising, and her extensive network of high-net-worth clients led to a sale well above asking price.",
+    "rating": 5,
+    "date": "December 2022"
+  },
+  {
+    "id": 3,
+    "name": "Robert & Elizabeth Chen",
+    "location": "Bought in Tournament Hills",
+    "testimonial": "As international buyers, we relied heavily on Dr. Duffy's knowledge and guidance. Her attention to detail and responsiveness made the entire process seamless despite being thousands of miles away for most of the transaction.",
+    "rating": 5,
+    "date": "August 2023"
+  }
+]

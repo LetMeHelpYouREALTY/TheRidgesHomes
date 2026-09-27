@@ -1,7 +1,6 @@
 /**
  * Hyperlocal map configuration for The Ridges Summerlin.
  * Map center: Club Ridges clubhouse (11550 Granite Ridge Dr, Las Vegas, NV 89135).
- * Coordinates sourced from public geodata for Granite Ridge Dr (maplogs.com elevation POI).
  */
 export const COMMUNITY_MAP_CONFIG = {
   name: "The Ridges",
@@ -15,8 +14,8 @@ export const COMMUNITY_MAP_CONFIG = {
   },
   centerAddress: "11550 Granite Ridge Dr, Las Vegas, NV 89135",
   centerLabel: "The Ridges Summerlin (Club Ridges)",
-  searchRadiusMeters: 8000,
-  siteUrl: "https://theridgessummerlinhomes.com",
+  searchRadiusMeters: 5000,
+  siteUrl: "https://www.theridgessummerlinhomes.com",
 };
 
 export type AmenityCategoryId =
@@ -35,12 +34,11 @@ export type AmenityCategoryId =
 export type AmenityCategory = {
   id: AmenityCategoryId;
   label: string;
-  /** Google Places API (New) includedPrimaryTypes */
+  /** Google Places API (New) includedPrimaryTypes — one searchNearby per category */
   primaryTypes: string[];
   ariaLabel: string;
 };
 
-/** Category order tuned for The Ridges: golf-forward luxury guard-gated community */
 export const AMENITY_CATEGORIES: AmenityCategory[] = [
   {
     id: "golf",
@@ -113,13 +111,14 @@ export const AMENITY_CATEGORIES: AmenityCategory[] = [
 export type CuratedAmenity = {
   id: string;
   name: string;
+  /** Omit from JSON-LD if unverified — all entries below are primary-source verified */
   address: string;
   category: AmenityCategoryId;
   schemaType: string;
+  sourceUrl: string;
   note?: string;
 };
 
-/** Verified places for static content, fallback list, and ItemList schema */
 export const CURATED_AMENITIES: CuratedAmenity[] = [
   {
     id: "club-ridges",
@@ -127,15 +126,18 @@ export const CURATED_AMENITIES: CuratedAmenity[] = [
     address: "11550 Granite Ridge Dr, Las Vegas, NV 89135",
     category: "fitness",
     schemaType: "ExerciseGym",
+    sourceUrl: "https://www.theridgeslv.com/club-ridges",
     note: "Private clubhouse and fitness center for The Ridges residents.",
   },
   {
     id: "bears-best",
     name: "Bear's Best Las Vegas",
-    address: "11550 Granite Ridge Dr, Las Vegas, NV 89135",
+    address: "11111 W Flamingo Rd, Las Vegas, NV 89135",
     category: "golf",
     schemaType: "GolfCourse",
-    note: "Jack Nicklaus-designed course at the heart of The Ridges.",
+    sourceUrl: "https://bearsbestlv.com/location-hours/",
+    note:
+      "Jack Nicklaus-designed course within The Ridges; closed to public play in 2025 for redevelopment as Amara Golf Club (verify current access before visiting).",
   },
   {
     id: "downtown-summerlin",
@@ -143,15 +145,24 @@ export const CURATED_AMENITIES: CuratedAmenity[] = [
     address: "1980 Festival Plaza Dr, Las Vegas, NV 89135",
     category: "shopping",
     schemaType: "ShoppingCenter",
-    note: "Open-air dining, retail, and entertainment in Summerlin.",
+    sourceUrl: "https://www.downtownsummerlin.com/",
+    note: "Open-air dining, retail, and services in Summerlin.",
   },
   {
-    id: "red-rock-canyon",
-    name: "Red Rock Canyon National Conservation Area",
-    address: "1000 Scenic Loop Dr, Las Vegas, NV 89161",
-    category: "parks",
-    schemaType: "Park",
-    note: "Scenic desert recreation bordering The Ridges to the west.",
+    id: "whole-foods-summerlin",
+    name: "Whole Foods Market (Downtown Summerlin)",
+    address: "2475 S Town Center Dr, Las Vegas, NV 89135",
+    category: "grocery",
+    schemaType: "GroceryStore",
+    sourceUrl: "https://www.wholefoodsmarket.com/stores/downtownsummerlin",
+  },
+  {
+    id: "smiths-charleston",
+    name: "Smith's Food and Drug",
+    address: "9851 W Charleston Blvd, Las Vegas, NV 89117",
+    category: "grocery",
+    schemaType: "GroceryStore",
+    sourceUrl: "https://www.smithsfoodanddrug.com/stores/grocery/nv/las-vegas/charleston/70500214",
   },
   {
     id: "summerlin-hospital",
@@ -159,27 +170,24 @@ export const CURATED_AMENITIES: CuratedAmenity[] = [
     address: "657 N Town Center Dr, Las Vegas, NV 89144",
     category: "healthcare",
     schemaType: "Hospital",
+    sourceUrl: "https://www.dignityhealth.org/las-vegas/locations/summerlin-hospital",
   },
   {
-    id: "trader-joes-summerlin",
-    name: "Trader Joe's",
-    address: "9260 W Sahara Ave, Las Vegas, NV 89117",
-    category: "grocery",
-    schemaType: "GroceryStore",
-  },
-  {
-    id: "whole-foods-summerlin",
-    name: "Whole Foods Market",
-    address: "9410 W Lake Mead Blvd, Las Vegas, NV 89134",
-    category: "grocery",
-    schemaType: "GroceryStore",
+    id: "red-rock-canyon",
+    name: "Red Rock Canyon National Conservation Area",
+    address: "1000 Scenic Loop Dr, Las Vegas, NV 89161",
+    category: "parks",
+    schemaType: "Park",
+    sourceUrl: "https://www.nps.gov/redr/planyourvisit/basicinfo.htm",
+    note: "Scenic desert recreation west of Summerlin.",
   },
   {
     id: "palo-verde-high",
     name: "Palo Verde High School",
-    address: "333 S Pavilion Center Dr, Las Vegas, NV 89144",
+    address: "333 Pavilion Center Dr, Las Vegas, NV 89144",
     category: "schools",
     schemaType: "School",
+    sourceUrl: "https://www.paloverde.org/contact-us/contact",
   },
 ];
 
@@ -187,7 +195,7 @@ export const AMENITIES_FAQ = [
   {
     question: "What grocery stores are near The Ridges Summerlin?",
     answer:
-      "Residents typically shop at Trader Joe's on West Sahara Avenue, Whole Foods Market on West Lake Mead Boulevard, and the grocers and specialty markets at Downtown Summerlin on Festival Plaza Drive — all a short drive from the guard gates.",
+      "Residents often shop at Whole Foods Market at 2475 S Town Center Drive in Downtown Summerlin, Smith's Food and Drug on West Charleston Boulevard, and additional grocers in surrounding Summerlin villages — all a short drive from the guard gates.",
   },
   {
     question: "How far is The Ridges from the Las Vegas Strip?",
@@ -202,7 +210,7 @@ export const AMENITIES_FAQ = [
   {
     question: "What golf is available in The Ridges?",
     answer:
-      "Bear's Best Las Vegas, a Jack Nicklaus-designed course with replica holes, is the centerpiece golf amenity within The Ridges community.",
+      "Bear's Best Las Vegas, a Jack Nicklaus-designed course with replica holes, is within The Ridges community. Confirm current public access and redevelopment status before planning a round.",
   },
   {
     question: "How far is Harry Reid International Airport from The Ridges?",
@@ -213,6 +221,11 @@ export const AMENITIES_FAQ = [
     question: "Where do Ridges residents dine and shop locally?",
     answer:
       "Downtown Summerlin offers restaurants, boutiques, and services at Festival Plaza Drive, minutes from The Ridges gates — many residents also use Summerlin's village centers along Charleston Boulevard and Rampart Boulevard.",
+  },
+  {
+    question: "Which CCSD schools are assigned to The Ridges addresses?",
+    answer:
+      "School assignments depend on your street address within The Ridges. Verify assigned schools with the Clark County School District Zoning Search before enrolling; Palo Verde High School is one CCSD high school serving parts of Summerlin.",
   },
   {
     question: "Is outdoor recreation close to The Ridges?",
@@ -236,5 +249,5 @@ export function buildDirectionsUrl(lat: number, lng: number): string {
 }
 
 export function buildEmbedMapUrl(lat: number, lng: number): string {
-  return `https://www.google.com/maps?q=${lat},${lng}&z=13&output=embed`;
+  return `https://www.google.com/maps?q=${lat},${lng}&z=14&output=embed`;
 }

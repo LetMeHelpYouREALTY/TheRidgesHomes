@@ -105,9 +105,9 @@ const Amenities = () => {
           </h3>
           <p className="text-neutral-700">
             Downtown Summerlin combines retail, services, and entertainment.
-            Grocery runs often include Trader Joe&apos;s on West Sahara Avenue
-            and Whole Foods Market on West Lake Mead Boulevard, with additional
-            options in surrounding Summerlin villages.
+            Grocery runs often include Whole Foods Market at Downtown Summerlin
+            (Town Center Drive), Smith&apos;s on West Charleston Boulevard, and
+            additional options in surrounding Summerlin villages.
           </p>
 
           <h3 className="text-2xl font-display font-semibold text-primary mt-10">
@@ -115,9 +115,18 @@ const Amenities = () => {
           </h3>
           <p className="text-neutral-700">
             The Ridges is served by Clark County School District schools in the
-            Summerlin area, including Palo Verde High School on Pavilion Center
-            Drive. Families should confirm attendance zones and enrollment with
-            CCSD for their specific address.
+            Summerlin area. Which CCSD schools are assigned to your address?
+            Verify with the{" "}
+            <a
+              href="https://ccsd.net/zoning"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-secondary hover:underline"
+            >
+              CCSD Zoning Search
+            </a>{" "}
+            before enrolling; Palo Verde High School is one high school serving
+            parts of Summerlin.
           </p>
 
           <h3 className="text-2xl font-display font-semibold text-primary mt-10">
