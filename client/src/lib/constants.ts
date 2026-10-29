@@ -1,7 +1,7 @@
 export const SITE_INFO = {
   title: "The Ridges Summerlin Homes",
   description: "Explore luxury homes in The Ridges Summerlin with Dr. Jan Duffy, your expert real estate agent specializing in Las Vegas luxury properties.",
-  phone: "(702) 555-1234",
+  phone: "(702) 500-1955",
   email: "jan@theridgessummerlinhomes.com",
   address: {
     street: "10100 W Charleston Blvd, Suite 160",
