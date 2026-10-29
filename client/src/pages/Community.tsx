@@ -251,7 +251,7 @@ const Community = () => {
               <div className="p-8">
                 <h3 className="text-2xl font-display font-bold text-primary mb-4">Promontory</h3>
                 <p className="text-neutral-600 mb-6">
-                  Exclusive enclave featuring some of the most valuable properties in The Ridges with dramatic architecture.
+                  Guard-gated enclave featuring some of the most valuable properties in The Ridges with dramatic architecture.
                 </p>
                 <Link 
                   href="/listings?neighborhood=promontory"
