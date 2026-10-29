@@ -88,7 +88,7 @@ const About = () => {
               
               <div className="space-y-6 text-neutral-700 mb-10">
                 <p>
-                  For over 15 years, I have been helping clients discover their dream homes in Las Vegas' most exclusive communities, with a specialized focus on The Ridges Summerlin. As both a real estate professional and a resident of The Ridges, I offer my clients unparalleled insights into this extraordinary community.
+                  For over 15 years, I have been helping clients discover their dream homes in Las Vegas' guard-gated and luxury communities, with a specialized focus on The Ridges Summerlin. As both a real estate professional and a resident of The Ridges, I offer my clients unparalleled insights into this extraordinary community.
                 </p>
                 <p>
                   My journey in luxury real estate began after completing my doctorate in Business Administration with a focus on Real Estate Economics. This academic background, combined with my hands-on experience in the luxury market, allows me to provide data-driven advice while understanding the emotional aspects of finding the perfect home.
