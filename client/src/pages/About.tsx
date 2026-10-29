@@ -59,7 +59,7 @@ const About = () => {
                     <i className="fas fa-certificate text-secondary mt-1 mr-3"></i>
                     <div>
                       <h4 className="font-display font-semibold text-primary">Million Dollar Guild Member</h4>
-                      <p className="text-neutral-600 text-sm">Top 1% of luxury real estate professionals</p>
+                      <p className="text-neutral-600 text-sm">5.0★ from 50 Realtor.com reviews</p>
                     </div>
                   </li>
                   <li className="flex items-start">
@@ -111,7 +111,7 @@ const About = () => {
                 </div>
                 <div className="flex items-center bg-neutral-100 rounded-full px-4 py-2">
                   <i className="fas fa-certificate text-secondary mr-2"></i>
-                  <span className="font-secondary">Top 1% Producer</span>
+                  <span className="font-secondary">5.0★ on Realtor.com</span>
                 </div>
                 <div className="flex items-center bg-neutral-100 rounded-full px-4 py-2">
                   <i className="fas fa-home text-secondary mr-2"></i>

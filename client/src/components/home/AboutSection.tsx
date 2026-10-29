@@ -38,7 +38,7 @@ const AboutSection = () => {
               </div>
               <div className="flex items-center bg-neutral-100 rounded-full px-4 py-2">
                 <i className="fas fa-certificate text-secondary mr-2"></i>
-                <span className="font-secondary">Top 1% Producer</span>
+                <span className="font-secondary">5.0★ on Realtor.com</span>
               </div>
               <div className="flex items-center bg-neutral-100 rounded-full px-4 py-2">
                 <i className="fas fa-home text-secondary mr-2"></i>
