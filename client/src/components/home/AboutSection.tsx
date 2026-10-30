@@ -21,13 +21,13 @@ const AboutSection = () => {
             
             <div className="space-y-4 text-neutral-700 mb-8">
               <p>
-                With over 15 years of experience in luxury real estate, Dr. Jan Duffy has established herself as the premier expert for The Ridges Summerlin. Her unique combination of market knowledge, negotiation skills, and personalized service ensures that each client receives concierge-level attention.
+                Licensed since 2008 · 35 years in Las Vegas, Dr. Jan Duffy has established herself as the premier expert for The Ridges Summerlin. Her unique combination of market knowledge, negotiation skills, and personalized service ensures that each client receives concierge-level attention.
               </p>
               <p>
                 As a resident of The Ridges herself, Dr. Duffy offers invaluable insider knowledge of the community's exclusive amenities, neighborhoods, and lifestyle opportunities. Her dedication to client satisfaction has earned her a reputation for excellence and a portfolio of high-profile clientele.
               </p>
               <p>
-                Dr. Duffy holds certifications as a Luxury Home Marketing Specialist and is consistently ranked among the top 1% of real estate professionals in Las Vegas.
+                Dr. Duffy holds certifications as a Luxury Home Marketing Specialist and is rated 5.0★ on Realtor.com (50 reviews).
               </p>
             </div>
             

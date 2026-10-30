@@ -118,7 +118,8 @@ const Footer = () => {
         
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-neutral-400 text-sm mb-4 md:mb-0">
-            &copy; {currentYear} Dr. Jan Duffy | The Ridges Summerlin Homes. All rights reserved.
+            &copy; {currentYear} Dr. Jan Duffy | The Ridges Summerlin Homes. All rights reserved.<br />
+            Berkshire Hathaway HomeServices Nevada Properties since September 2008 · License S.0197614.LLC
           </p>
           <div className="flex space-x-6 text-sm text-neutral-400">
             <Link href="/privacy" className="hover:text-neutral-300 transition-standard">Privacy Policy</Link>

@@ -10,7 +10,7 @@ const About = () => {
     // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute("content", "Meet Dr. Jan Duffy, luxury real estate specialist for The Ridges Summerlin with over 15 years of experience and insider knowledge of Las Vegas' most prestigious community.");
+      metaDescription.setAttribute("content", "Meet Dr. Jan Duffy, luxury real estate specialist for The Ridges Summerlin, licensed since 2008 · 35 years in Las Vegas, with insider knowledge of Las Vegas' most prestigious community.");
     }
   }, []);
 
@@ -88,10 +88,10 @@ const About = () => {
               
               <div className="space-y-6 text-neutral-700 mb-10">
                 <p>
-                  For over 15 years, I have been helping clients discover their dream homes in Las Vegas' guard-gated and luxury communities, with a specialized focus on The Ridges Summerlin. As both a real estate professional and a resident of The Ridges, I offer my clients unparalleled insights into this extraordinary community.
+                  Licensed since 2008 · 35 years in Las Vegas, I have been helping clients discover their dream homes in Las Vegas' guard-gated and luxury communities, with a specialized focus on The Ridges Summerlin. As both a real estate professional and a resident of The Ridges, I offer my clients unparalleled insights into this extraordinary community.
                 </p>
                 <p>
-                  My journey in luxury real estate began after completing my doctorate in Business Administration with a focus on Real Estate Economics. This academic background, combined with my hands-on experience in the luxury market, allows me to provide data-driven advice while understanding the emotional aspects of finding the perfect home.
+                  My journey in luxury real estate began after completing my Ph.D. in Research. This academic background, combined with my hands-on experience in the luxury market, allows me to provide data-driven advice while understanding the emotional aspects of finding the perfect home.
                 </p>
                 <p>
                   What sets my service apart is my commitment to personalized attention. I intentionally maintain a selective client base to ensure that each individual receives the concierge-level service they deserve. From the initial consultation to well beyond closing, I remain dedicated to exceeding expectations and creating lasting relationships.
