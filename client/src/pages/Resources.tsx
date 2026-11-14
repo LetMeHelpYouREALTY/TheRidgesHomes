@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import LocalMarketPost from '@/components/home/LocalMarketPost';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -754,9 +755,7 @@ const Resources = () => {
                   </p>
                 </div>
                 
-                <p className="text-center text-lg text-neutral-600">
-                  New local market updates are coming soon.
-                </p>
+                <LocalMarketPost />
               </div>
             </TabsContent>
           </Tabs>
