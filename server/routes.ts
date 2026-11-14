@@ -3,7 +3,6 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { contactSchema, valuationRequestSchema } from "@shared/schema";
 import followUpBossService from "./services/followUpBoss";
-import Parser from 'rss-parser';
 import axios from 'axios';
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -127,42 +126,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // RSS Feed proxy endpoint
-  app.get('/api/rss-feed', async (req, res) => {
-    try {
-      const { url } = req.query;
-      
-      if (!url || typeof url !== 'string') {
-        return res.status(400).json({ 
-          success: false, 
-          message: 'URL parameter is required'
-        });
-      }
-      
-      // Create RSS parser
-      const parser = new Parser();
-      
-      // Fetch RSS feed
-      const response = await axios.get(url);
-      
-      // Parse RSS feed
-      const feed = await parser.parseString(response.data);
-      
-      // Return feed
-      res.status(200).json({
-        success: true,
-        title: feed.title,
-        description: feed.description,
-        link: feed.link,
-        items: feed.items
-      });
-    } catch (error) {
-      console.error('Error fetching RSS feed:', error);
-      res.status(500).json({ 
-        success: false, 
-        message: 'Failed to fetch RSS feed',
-        error: error instanceof Error ? error.message : 'Unknown error'
-      });
     }
   });
   
