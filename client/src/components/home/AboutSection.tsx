@@ -6,11 +6,14 @@ const AboutSection = () => {
       <div className="container mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
-            <img 
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1000&q=80" 
-              alt="Dr. Jan Duffy, Luxury Real Estate Specialist" 
-              className="w-full h-auto rounded-lg shadow-xl"
-            />
+            <div className="bg-neutral-100 p-8 rounded-lg">
+              <ul className="space-y-4 text-neutral-700">
+                <li><strong className="text-primary">Licensed since 2008</strong> · Nevada license S.0197614.LLC</li>
+                <li><strong className="text-primary">Berkshire Hathaway HomeServices</strong> · Nevada Properties</li>
+                <li><strong className="text-primary">$127M+ in career sales</strong> · 500+ clients served</li>
+                <li><strong className="text-primary">35 years</strong> in Las Vegas</li>
+              </ul>
+            </div>
           </div>
           
           <div>
@@ -21,13 +24,10 @@ const AboutSection = () => {
             
             <div className="space-y-4 text-neutral-700 mb-8">
               <p>
-                With over 15 years of experience in luxury real estate, Dr. Jan Duffy has established herself as the premier expert for The Ridges Summerlin. Her unique combination of market knowledge, negotiation skills, and personalized service ensures that each client receives concierge-level attention.
+                Dr. Jan Duffy has helped buyers and sellers across the Las Vegas Valley since 2008, with more than $127 million in career sales. She brings 35 years of Las Vegas knowledge to every move in The Ridges and the rest of Summerlin.
               </p>
               <p>
-                As a resident of The Ridges herself, Dr. Duffy offers invaluable insider knowledge of the community's exclusive amenities, neighborhoods, and lifestyle opportunities. Her dedication to client satisfaction has earned her a reputation for excellence and a portfolio of high-profile clientele.
-              </p>
-              <p>
-                Dr. Duffy holds certifications as a Luxury Home Marketing Specialist and is consistently ranked among the top 1% of real estate professionals in Las Vegas.
+                Her approach is simple: real numbers, clear advice and steady guidance from first call to closing.
               </p>
             </div>
             
@@ -38,11 +38,11 @@ const AboutSection = () => {
               </div>
               <div className="flex items-center bg-neutral-100 rounded-full px-4 py-2">
                 <i className="fas fa-certificate text-secondary mr-2"></i>
-                <span className="font-secondary">5.0★ on Realtor.com</span>
+                <span className="font-secondary">Licensed since 2008</span>
               </div>
               <div className="flex items-center bg-neutral-100 rounded-full px-4 py-2">
                 <i className="fas fa-home text-secondary mr-2"></i>
-                <span className="font-secondary">Ridges Resident</span>
+                <span className="font-secondary">$127M+ career sales</span>
               </div>
             </div>
             

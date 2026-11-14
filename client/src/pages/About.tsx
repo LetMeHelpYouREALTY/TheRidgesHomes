@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'wouter';
-import { TESTIMONIALS } from '@/lib/constants';
+import TestimonialsSection from '@/components/home/TestimonialsSection';
 
 const About = () => {
   // Set page title and meta description
@@ -10,7 +10,7 @@ const About = () => {
     // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute("content", "Meet Dr. Jan Duffy, luxury real estate specialist for The Ridges Summerlin with over 15 years of experience and insider knowledge of Las Vegas' most prestigious community.");
+      metaDescription.setAttribute("content", "Meet Dr. Jan Duffy, Las Vegas REALTOR® licensed since 2008 with Berkshire Hathaway HomeServices Nevada Properties, serving buyers and sellers in The Ridges Summerlin.");
     }
   }, []);
 
@@ -39,43 +39,13 @@ const About = () => {
         <div className="container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
             <div>
-              <img 
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1000&q=80" 
-                alt="Dr. Jan Duffy, Luxury Real Estate Specialist" 
-                className="w-full h-auto rounded-lg shadow-xl mb-8"
-              />
-              
               <div className="bg-neutral-100 p-8 rounded-lg">
-                <h3 className="text-2xl font-display font-bold text-primary mb-4">Credentials & Certifications</h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <i className="fas fa-award text-secondary mt-1 mr-3"></i>
-                    <div>
-                      <h4 className="font-display font-semibold text-primary">Certified Luxury Home Marketing Specialist</h4>
-                      <p className="text-neutral-600 text-sm">Institute for Luxury Home Marketing</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <i className="fas fa-certificate text-secondary mt-1 mr-3"></i>
-                    <div>
-                      <h4 className="font-display font-semibold text-primary">Million Dollar Guild Member</h4>
-                      <p className="text-neutral-600 text-sm">5.0★ from 50 Realtor.com reviews</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <i className="fas fa-star text-secondary mt-1 mr-3"></i>
-                    <div>
-                      <h4 className="font-display font-semibold text-primary">Las Vegas Top Producer</h4>
-                      <p className="text-neutral-600 text-sm">10 consecutive years</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <i className="fas fa-graduation-cap text-secondary mt-1 mr-3"></i>
-                    <div>
-                      <h4 className="font-display font-semibold text-primary">Doctor of Business Administration</h4>
-                      <p className="text-neutral-600 text-sm">Focus on Real Estate Economics</p>
-                    </div>
-                  </li>
+                <h3 className="text-2xl font-display font-bold text-primary mb-4">Background</h3>
+                <ul className="space-y-4 text-neutral-700">
+                  <li><strong className="text-primary">Licensed since 2008</strong><br /><span className="text-sm text-neutral-600">Nevada license S.0197614.LLC</span></li>
+                  <li><strong className="text-primary">Berkshire Hathaway HomeServices Nevada Properties</strong><br /><span className="text-sm text-neutral-600">Since September 2008</span></li>
+                  <li><strong className="text-primary">$127M+ in career sales</strong><br /><span className="text-sm text-neutral-600">500+ clients served</span></li>
+                  <li><strong className="text-primary">Doctorate (PhD)</strong><br /><span className="text-sm text-neutral-600">35 years in Las Vegas</span></li>
                 </ul>
               </div>
             </div>
@@ -88,19 +58,13 @@ const About = () => {
               
               <div className="space-y-6 text-neutral-700 mb-10">
                 <p>
-                  For over 15 years, I have been helping clients discover their dream homes in Las Vegas' guard-gated and luxury communities, with a specialized focus on The Ridges Summerlin. As both a real estate professional and a resident of The Ridges, I offer my clients unparalleled insights into this extraordinary community.
+                  Since 2008, I have helped clients buy and sell homes across the Las Vegas Valley, including the guard-gated and luxury neighborhoods of Summerlin. I bring 35 years of Las Vegas knowledge to every client.
                 </p>
                 <p>
-                  My journey in luxury real estate began after completing my doctorate in Business Administration with a focus on Real Estate Economics. This academic background, combined with my hands-on experience in the luxury market, allows me to provide data-driven advice while understanding the emotional aspects of finding the perfect home.
+                  My doctorate trained me to work from data. I pair that with hands-on market experience, so my advice rests on real numbers while respecting what a move means to you.
                 </p>
                 <p>
-                  What sets my service apart is my commitment to personalized attention. I intentionally maintain a selective client base to ensure that each individual receives the concierge-level service they deserve. From the initial consultation to well beyond closing, I remain dedicated to exceeding expectations and creating lasting relationships.
-                </p>
-                <p>
-                  My approach to real estate is both strategic and compassionate. I understand that a luxury home is not merely a transaction but a significant life decision. Whether you're looking to purchase your dream home or market your property to qualified buyers, I leverage my extensive network, marketing expertise, and negotiation skills to achieve optimal results.
-                </p>
-                <p>
-                  When not assisting clients, I enjoy exploring the hiking trails around Red Rock Canyon, attending cultural events at The Smith Center, and supporting local charitable organizations focused on education and community development.
+                  My approach to real estate is both strategic and personal. A home in The Ridges is a major life decision, not just a transaction. Whether you are buying or selling, I use clear pricing, strong marketing and careful negotiation to get you the best result.
                 </p>
               </div>
               
@@ -111,11 +75,11 @@ const About = () => {
                 </div>
                 <div className="flex items-center bg-neutral-100 rounded-full px-4 py-2">
                   <i className="fas fa-certificate text-secondary mr-2"></i>
-                  <span className="font-secondary">5.0★ on Realtor.com</span>
+                  <span className="font-secondary">Licensed since 2008</span>
                 </div>
                 <div className="flex items-center bg-neutral-100 rounded-full px-4 py-2">
                   <i className="fas fa-home text-secondary mr-2"></i>
-                  <span className="font-secondary">Ridges Resident</span>
+                  <span className="font-secondary">$127M+ career sales</span>
                 </div>
                 <div className="flex items-center bg-neutral-100 rounded-full px-4 py-2">
                   <i className="fas fa-handshake text-secondary mr-2"></i>
@@ -142,47 +106,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-20 px-4 md:px-8 bg-neutral-100">
-        <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-primary mb-4">What My Clients Say</h2>
-            <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
-              I'm honored to have helped numerous clients find their dream homes and achieve their real estate goals in The Ridges Summerlin.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {TESTIMONIALS.map(testimonial => (
-              <div key={testimonial.id} className="bg-white rounded-lg p-8 shadow-lg">
-                <div className="text-secondary mb-4">
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <i key={i} className="fas fa-star"></i>
-                  ))}
-                </div>
-                
-                <p className="text-neutral-600 italic mb-6">
-                  "{testimonial.content}"
-                </p>
-                
-                <div>
-                  <h4 className="font-display font-bold text-primary">{testimonial.name}</h4>
-                  <p className="text-neutral-500 text-sm">{testimonial.type}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="text-center">
-            <Link 
-              href="/contact"
-              className="inline-block bg-primary hover:bg-primary-light text-white font-secondary font-medium py-3 px-8 rounded transition-standard"
-            >
-              Work With Dr. Duffy
-            </Link>
-          </div>
-        </div>
-      </section>
+      <TestimonialsSection />
     </>
   );
 };

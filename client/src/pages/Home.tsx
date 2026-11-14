@@ -1,6 +1,5 @@
 import Hero from '@/components/home/Hero';
 import PropertySearch from '@/components/home/PropertySearch';
-import FeaturedListings from '@/components/home/FeaturedListings';
 import AboutSection from '@/components/home/AboutSection';
 import CommunitySection from '@/components/home/CommunitySection';
 import ValuationSection from '@/components/home/ValuationSection';
@@ -25,7 +24,6 @@ const Home = () => {
     <>
       <Hero />
       <PropertySearch />
-      <FeaturedListings />
       <AboutSection />
       <CommunitySection />
       <ValuationSection />

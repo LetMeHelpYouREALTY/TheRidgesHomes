@@ -1,7 +1,7 @@
 export const SITE_INFO = {
   title: "The Ridges Summerlin Homes",
   description: "Explore luxury homes in The Ridges Summerlin with Dr. Jan Duffy, your expert real estate agent specializing in Las Vegas luxury properties.",
-  phone: "(702) 555-1234",
+  phone: "(702) 842-0410",
   email: "jan@theridgessummerlinhomes.com",
   address: {
     street: "10100 W Charleston Blvd, Suite 160",
@@ -46,68 +46,12 @@ export const NAV_LINKS = [
   { name: "Professional Disclosure", path: "/disclosure" }
 ];
 
-export const FEATURED_PROPERTIES = [
-  {
-    id: 1,
-    title: "Elegant Desert Masterpiece",
-    address: "24 Promontory Ridge Drive, Las Vegas, NV 89135",
-    price: 4250000,
-    beds: 5,
-    baths: 6,
-    sqft: 6300,
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500&q=80",
-    tag: { type: "Featured", color: "secondary" }
-  },
-  {
-    id: 2,
-    title: "Modern Desert Retreat",
-    address: "15 Painted Feather Way, Las Vegas, NV 89135",
-    price: 5850000,
-    beds: 6,
-    baths: 8,
-    sqft: 7500,
-    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500&q=80",
-    tag: { type: "New Listing", color: "primary" }
-  },
-  {
-    id: 3,
-    title: "Spectacular Custom Estate",
-    address: "9 Cloud Chaser Boulevard, Las Vegas, NV 89135",
-    price: 7995000,
-    beds: 7,
-    baths: 9,
-    sqft: 10200,
-    image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500&q=80",
-    tag: { type: "Exclusive", color: "accent" }
-  }
-];
+// Sample listings were removed on 2026-11-14; live listings come from the
+// RealScout widgets on the home and /listings pages.
 
-export const TESTIMONIALS = [
-  {
-    id: 1,
-    name: "Michael & Sarah Thompson",
-    type: "Bought in The Ridges",
-    content: "Dr. Duffy's expertise in The Ridges was invaluable. She knew every detail about the community and helped us find our dream home. Her negotiation skills saved us significantly on our purchase.",
-    date: "March 2023",
-    rating: 5
-  },
-  {
-    id: 2,
-    name: "Jennifer Ramirez",
-    type: "Sold in Falcon Ridge",
-    content: "The marketing strategy Dr. Duffy implemented for our home was exceptional. Professional photography, targeted advertising, and her extensive network of high-net-worth clients led to a sale well above asking price.",
-    date: "December 2022",
-    rating: 5
-  },
-  {
-    id: 3,
-    name: "Robert & Elizabeth Chen",
-    type: "Bought in Tournament Hills",
-    content: "As international buyers, we relied heavily on Dr. Duffy's knowledge and guidance. Her attention to detail and responsiveness made the entire process seamless despite being thousands of miles away for most of the transaction.",
-    date: "August 2023",
-    rating: 5
-  }
-];
+// Sample testimonials were removed on 2026-11-14. Reviews now link to
+// Dr. Jan Duffy's Google Business Profile, where clients post them.
+export const GOOGLE_REVIEWS_URL = "https://search.google.com/local/reviews?placeid=ChIJO3KBufO_yIARCylQ-F54gss";
 
 export const COMMUNITY_FEATURES = [
   {
