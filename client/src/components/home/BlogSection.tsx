@@ -15,7 +15,7 @@ interface FeedItem {
   isoDate?: string;
 }
 
-const RSS_FEED_URL = 'https://www.simplifyingthemarket.com/en/feed?a=956758-ef2edda2f940e018328655620ea05f18';
+const RSS_FEED_URL = 'https://www.simplifyingthemarket.com/en/feed/';
 
 const BlogSection = () => {
   const [feedItems, setFeedItems] = useState<FeedItem[]>([]);
@@ -134,7 +134,7 @@ const BlogSection = () => {
           
           <div className="text-center mt-8">
             <a 
-              href="https://www.simplifyingthemarket.com/en/?a=956758-ef2edda2f940e018328655620ea05f18" 
+              href="https://www.simplifyingthemarket.com/en/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="px-6 py-3 bg-secondary hover:bg-secondary-dark text-white font-secondary rounded transition-standard inline-block"

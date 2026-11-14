@@ -18,6 +18,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
+    // Only fetch the blog feed this site uses, not any URL a visitor sends
+    let host = '';
+    try {
+      host = new URL(url).hostname;
+    } catch {
+      host = '';
+    }
+    if (host !== 'www.simplifyingthemarket.com' && host !== 'simplifyingthemarket.com') {
+      return res.status(400).json({ success: false, message: 'Unsupported feed URL' });
+    }
+
     const parser = new Parser();
     const response = await axios.get(url);
     const feed = await parser.parseString(response.data);
