@@ -57,7 +57,7 @@ const AboutSection = () => {
                 href="/#testimonials"
                 className="px-6 py-3 bg-white border border-neutral-300 hover:border-secondary text-neutral-800 hover:text-secondary font-secondary font-medium rounded transition-standard text-center"
               >
-                Read Testimonials
+                Read Reviews
               </Link>
             </div>
           </div>
