@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useSearch } from 'wouter';
 import { REALSCOUT_AGENT_ID } from '@/lib/constants';
+import AmenityMapSection from '@/components/amenities/AmenityMapSection';
 
 const Listings = () => {
   const [location] = useLocation();
@@ -211,6 +212,13 @@ const Listings = () => {
           </realscout-office-listings>
         </div>
       </section>
+
+      <AmenityMapSection
+        compact
+        id="listings-nearby"
+        title="Explore the Neighborhood"
+        subtitle="See restaurants, golf, parks, and services near listings in The Ridges Summerlin."
+      />
 
       {/* Call to Action */}
       <section className="py-16 px-4 md:px-8 bg-white">

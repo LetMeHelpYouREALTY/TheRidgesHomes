@@ -13,6 +13,7 @@ import Listings from "@/pages/Listings";
 import Contact from "@/pages/Contact";
 import Resources from "@/pages/Resources";
 import Disclosure from "@/pages/Disclosure";
+import Amenities from "@/pages/Amenities";
 
 function Router() {
   return (
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/community" component={Community} />
+      <Route path="/amenities" component={Amenities} />
       <Route path="/listings" component={Listings} />
       <Route path="/resources" component={Resources} />
       <Route path="/contact" component={Contact} />

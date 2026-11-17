@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'wouter';
 import { COMMUNITY_FEATURES } from '@/lib/constants';
+import AmenityMapSection from '@/components/amenities/AmenityMapSection';
 
 const Community = () => {
   // Set page title and meta description
@@ -175,6 +176,12 @@ const Community = () => {
           </div>
         </div>
       </section>
+
+      <AmenityMapSection
+        id="whats-nearby"
+        title="What's Nearby The Ridges"
+        subtitle="Golf, trails, Downtown Summerlin, and west-valley services within easy reach of guard-gated living."
+      />
 
       {/* Neighborhoods */}
       <section className="py-20 px-4 md:px-8 bg-white">

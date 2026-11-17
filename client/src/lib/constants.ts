@@ -28,6 +28,7 @@ export const NAV_LINKS = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
   { name: "Community", path: "/community" },
+  { name: "Nearby Amenities", path: "/amenities" },
   { name: "Listings", path: "/listings" },
   { 
     name: "Resources", 
